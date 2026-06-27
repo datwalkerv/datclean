@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DatClean — Remove EXIF Metadata From Photos",
+  title: "datclean — Remove EXIF Metadata From Photos",
   description:
     "Strip GPS coordinates, device info, timestamps and all hidden metadata from your photos — 100% client-side, no uploads, completely free and private.",
   keywords: [
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     "heic exif remover",
   ],
   openGraph: {
-    title: "DatClean — Remove EXIF Metadata From Photos",
+    title: "datclean — Remove EXIF Metadata From Photos",
     description:
       "Strip GPS, device info and all hidden metadata from your photos — 100% in your browser. No uploads ever.",
     type: "website",
@@ -36,7 +37,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="noise">{children}</body>
+      <body className="noise">
+        {children}
+        <Toaster
+          position="bottom-right"
+          theme="dark"
+          richColors
+          toastOptions={{
+            style: {
+              background: 'var(--bg-elevated)',
+              border: '1px solid var(--border)',
+              color: 'var(--text-primary)',
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }

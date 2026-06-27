@@ -54,5 +54,5 @@ export function getOutputFilename(file: File): string {
   const dotIdx = name.lastIndexOf('.');
   const base = dotIdx !== -1 ? name.slice(0, dotIdx) : name;
   const ext = isHeic(file) ? 'jpg' : dotIdx !== -1 ? name.slice(dotIdx + 1) : 'jpg';
-  return `${base}_clean.${ext}`;
+  return `${base}_datclean.${ext}`;
 }

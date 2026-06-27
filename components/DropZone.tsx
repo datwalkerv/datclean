@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react';
 import { Upload, ImageIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface DropZoneProps {
   onFiles: (files: File[]) => void;
@@ -15,10 +16,12 @@ const ACCEPTED_TYPES = [
 ];
 const ACCEPTED_EXT = /\.(jpe?g|png|webp|tiff?|heic|heif)$/i;
 
-function filterImageFiles(rawFiles: FileList | File[]): File[] {
-  return Array.from(rawFiles).filter(
+function filterImageFiles(rawFiles: FileList | File[]): { valid: File[]; rejectedCount: number } {
+  const all = Array.from(rawFiles);
+  const valid = all.filter(
     (f) => ACCEPTED_TYPES.includes(f.type) || ACCEPTED_EXT.test(f.name)
   );
+  return { valid, rejectedCount: all.length - valid.length };
 }
 
 export default function DropZone({ onFiles, disabled }: DropZoneProps) {
@@ -30,16 +33,32 @@ export default function DropZone({ onFiles, disabled }: DropZoneProps) {
       e.preventDefault();
       setDragOver(false);
       if (disabled) return;
-      const files = filterImageFiles(e.dataTransfer.files);
-      if (files.length) onFiles(files);
+      const { valid, rejectedCount } = filterImageFiles(e.dataTransfer.files);
+      if (rejectedCount > 0) {
+        toast.error(
+          rejectedCount === 1
+            ? '1 file was skipped — unsupported format.'
+            : `${rejectedCount} files were skipped — unsupported format.`,
+          { description: 'Accepted: JPEG, PNG, WebP, TIFF, HEIC' }
+        );
+      }
+      if (valid.length) onFiles(valid);
     },
     [onFiles, disabled]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-    const files = filterImageFiles(e.target.files);
-    if (files.length) onFiles(files);
+    const { valid, rejectedCount } = filterImageFiles(e.target.files);
+    if (rejectedCount > 0) {
+      toast.error(
+        rejectedCount === 1
+          ? '1 file was skipped — unsupported format.'
+          : `${rejectedCount} files were skipped — unsupported format.`,
+        { description: 'Accepted: JPEG, PNG, WebP, TIFF, HEIC' }
+      );
+    }
+    if (valid.length) onFiles(valid);
     e.target.value = '';
   };
 

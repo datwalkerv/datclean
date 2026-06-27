@@ -31,7 +31,7 @@ const ADVANTAGES: Advantage[] = [
     icon: DollarSign,
     title: 'Always Free',
     description:
-      'No subscriptions, no sign-ups, no paywalls. DatClean is open source and free forever.',
+      'No subscriptions, no sign-ups, no paywalls. datclean is open source and free forever.',
   },
   {
     icon: Zap,
@@ -49,7 +49,7 @@ const ADVANTAGES: Advantage[] = [
     icon: Globe,
     title: 'Works Offline',
     description:
-      'Once loaded, DatClean requires no internet connection to process your images.',
+      'Once loaded, datclean requires no internet connection to process your images.',
   },
   {
     icon: Smartphone,

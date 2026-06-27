@@ -71,7 +71,7 @@ export default function BeforeAfterSection() {
                 style={{ background: 'var(--danger)', boxShadow: '0 0 6px rgba(255,68,68,0.5)' }}
               />
               <span className="font-semibold" style={{ color: '#ff6b6b' }}>
-                Without DatClean
+                Without datclean
               </span>
               <span className="badge badge-danger ml-auto">Exposed</span>
             </div>
@@ -134,7 +134,7 @@ export default function BeforeAfterSection() {
                 style={{ background: 'var(--accent)', boxShadow: '0 0 6px var(--accent-glow)' }}
               />
               <span className="font-semibold" style={{ color: 'var(--accent)' }}>
-                After DatClean
+                After datclean
               </span>
               <span className="badge badge-success ml-auto">Protected</span>
             </div>

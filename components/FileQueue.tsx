@@ -30,30 +30,38 @@ interface FileQueueProps {
 
 export default function FileQueue({ files, onClear }: FileQueueProps) {
   const [items, setItems] = useState<FileItem[]>([]);
-  const initialized = useRef(false);
+  // Track which file signatures we've already enqueued (name+size+lastModified)
+  const processedIds = useRef<Set<string>>(new Set());
 
-  // Initialize items when files prop changes
+  // React to new files being added to the prop
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+    const newItems: FileItem[] = [];
 
-    const newItems: FileItem[] = files.map((f) => ({
-      id: `${f.name}-${f.size}-${Date.now()}-${Math.random()}`,
-      file: f,
-      status: 'idle',
-      exif: null,
-      cleanBlob: null,
-      outputName: getOutputFilename(f),
-      error: null,
-      expanded: false,
-      preview: null,
-    }));
-    setItems(newItems);
+    for (const f of files) {
+      const sig = `${f.name}-${f.size}-${f.lastModified}`;
+      if (processedIds.current.has(sig)) continue;
+      processedIds.current.add(sig);
 
-    // Start reading EXIF for all files
+      newItems.push({
+        id: `${sig}-${Math.random()}`,
+        file: f,
+        status: 'idle',
+        exif: null,
+        cleanBlob: null,
+        outputName: getOutputFilename(f),
+        error: null,
+        expanded: false,
+        preview: null,
+      });
+    }
+
+    if (newItems.length === 0) return;
+
+    setItems((prev) => [...prev, ...newItems]);
+    // Start reading EXIF for newly added files
     newItems.forEach((item) => readFile(item.id, item.file));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [files]);
 
   function updateItem(id: string, patch: Partial<FileItem>) {
     setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...patch } : it)));

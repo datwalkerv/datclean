@@ -30,7 +30,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                  DatClean
+                  datclean
                 </p>
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   Privacy-first metadata cleaner

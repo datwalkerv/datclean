@@ -13,8 +13,7 @@ export default function Home() {
   const [queueKey, setQueueKey] = useState(0);
 
   const handleFiles = useCallback((newFiles: File[]) => {
-    setFiles(newFiles);
-    setQueueKey((k) => k + 1);
+    setFiles((prev) => [...prev, ...newFiles]);
 
     // Smooth scroll to results
     setTimeout(() => {
@@ -50,7 +49,7 @@ export default function Home() {
                 dc
               </div>
               <span className="font-bold text-sm tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                DatClean
+                datclean
               </span>
             </div>
 
