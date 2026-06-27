@@ -6,7 +6,7 @@
 
 **Clean your photos. Protect your privacy.**
 
-Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata from your photos — instantly, entirely in your browser. Zero uploads. Zero traces.
+Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata from your photos instantly, entirely in your browser. Zero uploads. Zero traces.
 
 </div>
 
@@ -18,7 +18,6 @@ Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata fro
 - **🗺️ GPS & EXIF Stripping**: Removes GPS coordinates, device model, timestamps, camera settings, and all hidden metadata fields.
 - **📱 HEIC Support**: Full support for iPhone HEIC photos — converted and cleaned entirely in-browser using heic2any.
 - **🔍 Metadata Preview**: Inspect exactly what metadata is hiding in your files before deciding to strip it.
-- **🌟 Premium UI/UX**: Dark-mode interface with harmonious color palettes, responsive components, and subtle micro-animations.
 - **💚 Always Free**: No subscriptions, no sign-ups, no paywalls. Open source and free forever.
 
 
@@ -39,15 +38,13 @@ Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata fro
 
 ### How It Works
 - datclean uses the browser's native **Canvas API** to redraw your image pixels onto a clean canvas, producing a new file with zero metadata attached.
-- The process happens entirely within your browser tab using **OffscreenCanvas** — no data ever leaves your device.
+- The process happens entirely within your browser tab, no data ever leaves your device.
 - HEIC files from iPhones are first decoded in-browser via `heic2any`, then cleaned through the same pipeline.
 
 ### Privacy & Data Policy
 - datclean is built privacy-first by design. There are no databases, no analytics, no tracking, and no servers receiving your data.
 - We do not collect, store, or receive **any** information about you or your files.
-- The only storage used is your browser's memory during an active session. Once you close or refresh the tab, everything is gone.
 
 <br>
 
-**Made with 💚 for privacy.**  
-*Your photos are yours. Keep them that way.*
+**Made with love for love. 💚**  
