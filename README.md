@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+<img src="https://raw.githubusercontent.com/datwalkerv/datclean/refs/heads/main/public/icon.svg" width="10%" alt="datclean" style="border-radius: 18%;box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);" />
 
-First, run the development server:
+# datclean
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Clean your photos. Protect your privacy.**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata from your photos — instantly, entirely in your browser. Zero uploads. Zero traces.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Key Features
 
-## Learn More
+- **🔒 100% Client-Side Processing**: Every byte of processing happens inside your browser. Your images are never read by anyone but you.
+- **🚫 No Servers, No Uploads**: Zero servers receive your photos. No API calls, no third-party processing — it's architecturally impossible.
+- **📦 Batch Support**: Drop tens of files at once and clean them all with a single click, with per-file metadata inspection before stripping.
+- **🗺️ GPS & EXIF Stripping**: Removes GPS coordinates, device model, timestamps, camera settings, and all hidden metadata fields.
+- **📱 HEIC Support**: Full support for iPhone HEIC photos — converted and cleaned entirely in-browser using heic2any.
+- **🔍 Metadata Preview**: Inspect exactly what metadata is hiding in your files before deciding to strip it.
+- **🌟 Premium UI/UX**: Dark-mode interface with harmonious color palettes, responsive components, and subtle micro-animations.
+- **💚 Always Free**: No subscriptions, no sign-ups, no paywalls. Open source and free forever.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technology Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
+- **Runtime & View Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with CSS-level custom theme variables
+- **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
+- **EXIF Reading**: [exifr](https://github.com/MikeKovarik/exifr)
+- **HEIC Conversion**: [heic2any](https://github.com/alexcorvi/heic2any)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Toast Notifications**: [Sonner](https://sonner.emilkowal.ski/)
+- **Fonts**: [Inter](https://fonts.google.com/specimen/Inter) (Body) & [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) (Headings)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ⚖️ Disclaimer & Privacy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### How It Works
+- datclean uses the browser's native **Canvas API** to redraw your image pixels onto a clean canvas, producing a new file with zero metadata attached.
+- The process happens entirely within your browser tab using **OffscreenCanvas** — no data ever leaves your device.
+- HEIC files from iPhones are first decoded in-browser via `heic2any`, then cleaned through the same pipeline.
+
+### Privacy & Data Policy
+- datclean is built privacy-first by design. There are no databases, no analytics, no tracking, and no servers receiving your data.
+- We do not collect, store, or receive **any** information about you or your files.
+- The only storage used is your browser's memory during an active session. Once you close or refresh the tab, everything is gone.
+
+<br>
+
+**Made with 💚 for privacy.**  
+*Your photos are yours. Keep them that way.*

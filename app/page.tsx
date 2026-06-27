@@ -72,15 +72,6 @@ export default function Home() {
               >
                 Features
               </a>
-              <a
-                id="nav-github"
-                href="https://github.com/datwalkerv/datclean"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost text-xs"
-              >
-                GitHub
-              </a>
             </div>
           </nav>
 

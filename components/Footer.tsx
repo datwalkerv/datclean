@@ -40,9 +40,9 @@ export default function Footer() {
 
             <p className="text-xs flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
               Made with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by{' '}
-              <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+              <a href="https://github.com/datwalkerv" target="_blank" rel="noopener noreferrer" className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
                 datwalkerv
-              </span>
+              </a>
             </p>
           </div>
 
@@ -67,7 +67,7 @@ export default function Footer() {
 
               <a
                 id="footer-donate-link"
-                href="https://ko-fi.com/datwalkerv"
+                href="https://revolut.me/balagbalint/pocket/4wmvhlFQAI"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-sm transition-colors"
@@ -87,11 +87,11 @@ export default function Footer() {
               style={{ color: 'var(--text-muted)' }}
             >
               DatClean processes all images entirely in your browser. No data is ever
-              collected, transmitted, or stored. Use at your own discretion.
+              collected, transmitted, or stored.
             </p>
 
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              © {new Date().getFullYear()} DatClean · Open source · Free forever
+              © {new Date().getFullYear()} datclean · Open source · Free forever
             </p>
           </div>
 

@@ -68,6 +68,7 @@ const ADVANTAGES: Advantage[] = [
 export default function AdvantagesSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -84,7 +85,7 @@ export default function AdvantagesSection() {
         {/* Heading */}
         <div className={`text-center mb-12 reveal ${visible ? 'visible' : ''}`}>
           <span className="badge badge-success mb-4" style={{ fontSize: '0.8rem' }}>
-            Why DatClean
+            Why datclean
           </span>
           <h2
             className="text-3xl sm:text-4xl font-bold mt-3 mb-4"
@@ -93,7 +94,7 @@ export default function AdvantagesSection() {
             Built different, by design
           </h2>
           <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            Most &ldquo;privacy tools&rdquo; upload your files to clean them. DatClean never touches your data —
+            Most &ldquo;privacy tools&rdquo; upload your files to clean them. datclean never touches your data —
             it can&apos;t, by design.
           </p>
         </div>
@@ -102,33 +103,40 @@ export default function AdvantagesSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {ADVANTAGES.map((adv, i) => {
             const Icon = adv.icon;
+            const isHovered = hoveredIdx === i;
+            const isGreen = adv.accent || isHovered;
             return (
               <div
                 key={adv.title}
-                className={`card p-5 flex flex-col gap-3 reveal ${visible ? 'visible' : ''} ${adv.accent ? 'glow-accent-sm' : ''}`}
+                className={`card p-5 flex flex-col gap-3 reveal ${visible ? 'visible' : ''} ${isGreen ? 'glow-accent-sm' : ''}`}
                 style={{
                   transitionDelay: `${i * 0.06}s`,
-                  borderColor: adv.accent ? 'rgba(57,255,20,0.3)' : undefined,
-                  background: adv.accent ? 'rgba(57,255,20,0.04)' : 'var(--bg-surface)',
+                  borderColor: isGreen ? 'rgba(57,255,20,0.3)' : undefined,
+                  background: isGreen ? 'rgba(57,255,20,0.04)' : 'var(--bg-surface)',
+                  transition: 'background 0.25s, border-color 0.25s, box-shadow 0.25s',
+                  cursor: 'default',
                 }}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
               >
                 <div
                   className="flex items-center justify-center w-10 h-10 rounded-xl"
                   style={{
-                    background: adv.accent ? 'rgba(57,255,20,0.12)' : 'var(--bg-elevated)',
-                    border: `1px solid ${adv.accent ? 'rgba(57,255,20,0.2)' : 'var(--border)'}`,
+                    background: isGreen ? 'rgba(57,255,20,0.12)' : 'var(--bg-elevated)',
+                    border: `1px solid ${isGreen ? 'rgba(57,255,20,0.2)' : 'var(--border)'}`,
+                    transition: 'background 0.25s, border-color 0.25s',
                   }}
                 >
                   <Icon
                     className="w-5 h-5"
-                    style={{ color: adv.accent ? 'var(--accent)' : 'var(--text-secondary)' }}
+                    style={{ color: isGreen ? 'var(--accent)' : 'var(--text-secondary)', transition: 'color 0.25s' }}
                   />
                 </div>
 
                 <div>
                   <h3
                     className="text-sm font-semibold mb-1"
-                    style={{ color: adv.accent ? 'var(--accent)' : 'var(--text-primary)' }}
+                    style={{ color: isGreen ? 'var(--accent)' : 'var(--text-primary)', transition: 'color 0.25s' }}
                   >
                     {adv.title}
                   </h3>
