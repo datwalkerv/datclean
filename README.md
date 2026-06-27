@@ -10,12 +10,22 @@ Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata fro
 
 </div>
 
+## 🗂️ Pages
+
+### 🛡️ Clean Images (`/`)
+Remove all EXIF metadata from your photos while keeping the original file format and full resolution. Inspect exactly what's hiding in your files before stripping.
+
+### ⚡ Optimize Images (`/optimize`)
+The full pipeline in one click — strips all EXIF metadata, resizes images taller than 720px down proportionally, and exports everything as WebP. Perfect for preparing photos for the web.
+
+
 ## ✨ Key Features
 
 - **🔒 100% Client-Side Processing**: Every byte of processing happens inside your browser. Your images are never read by anyone but you.
 - **🚫 No Servers, No Uploads**: Zero servers receive your photos. No API calls, no third-party processing — it's architecturally impossible.
-- **📦 Batch Support**: Drop tens of files at once and clean them all with a single click, with per-file metadata inspection before stripping.
+- **📦 Batch Support**: Drop tens of files at once and clean or optimize them all with a single click, with per-file metadata inspection.
 - **🗺️ GPS & EXIF Stripping**: Removes GPS coordinates, device model, timestamps, camera settings, and all hidden metadata fields.
+- **⚡ Image Optimization**: Resize tall images to 720px height (proportional), convert to WebP at 90% quality — all in-browser.
 - **📱 HEIC Support**: Full support for iPhone HEIC photos — converted and cleaned entirely in-browser using heic2any.
 - **🔍 Metadata Preview**: Inspect exactly what metadata is hiding in your files before deciding to strip it.
 - **💚 Always Free**: No subscriptions, no sign-ups, no paywalls. Open source and free forever.
@@ -37,9 +47,18 @@ Strip GPS coordinates, device info, timestamps, and all hidden EXIF metadata fro
 ## ⚖️ Disclaimer & Privacy
 
 ### How It Works
-- datclean uses the browser's native **Canvas API** to redraw your image pixels onto a clean canvas, producing a new file with zero metadata attached.
-- The process happens entirely within your browser tab, no data ever leaves your device.
-- HEIC files from iPhones are first decoded in-browser via `heic2any`, then cleaned through the same pipeline.
+
+**Clean Images pipeline:**
+- Decodes your image into an `ImageBitmap` (browser-native, strips all metadata in memory)
+- Redraws pixel data onto an `OffscreenCanvas` at original resolution
+- Exports in the original format (JPEG, PNG, WebP, TIFF — HEIC becomes JPEG)
+
+**Optimize Images pipeline:**
+- Same EXIF stripping via `OffscreenCanvas`
+- If image height exceeds 720px, scales down proportionally (e.g. 4000×3000 → 960×720)
+- Exports as **WebP** at 90% quality for maximum browser compatibility and compression
+
+Both pipelines run entirely in your browser tab. No data ever leaves your device.
 
 ### Privacy & Data Policy
 - datclean is built privacy-first by design. There are no databases, no analytics, no tracking, and no servers receiving your data.
