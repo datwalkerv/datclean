@@ -21,14 +21,82 @@ The full pipeline in one click — strips all EXIF metadata, resizes images tall
 
 ## ✨ Key Features
 
-- **🔒 100% Client-Side Processing**: Every byte of processing happens inside your browser. Your images are never read by anyone but you.
-- **🚫 No Servers, No Uploads**: Zero servers receive your photos. No API calls, no third-party processing — it's architecturally impossible.
+- **🔒 100% Client-Side Processing**: Every byte of browser-based processing happens inside your tab. Your images are never read by anyone but you.
+- **🌐 Public REST API**: Two open endpoints — `/api/exif` and `/api/optimize` — let anyone integrate datclean into their own apps. No API key required, full CORS support.
 - **📦 Batch Support**: Drop tens of files at once and clean or optimize them all with a single click, with per-file metadata inspection.
 - **🗺️ GPS & EXIF Stripping**: Removes GPS coordinates, device model, timestamps, camera settings, and all hidden metadata fields.
-- **⚡ Image Optimization**: Resize tall images to 720px height (proportional), convert to WebP at 90% quality — all in-browser.
-- **📱 HEIC Support**: Full support for iPhone HEIC photos — converted and cleaned entirely in-browser using heic2any.
+- **⚡ Image Optimization**: Resize tall images to 720px height (proportional), convert to WebP at 90% quality.
+- **📱 HEIC Support**: Full support for iPhone HEIC photos — converted and cleaned in-browser and via the API using libheif.
 - **🔍 Metadata Preview**: Inspect exactly what metadata is hiding in your files before deciding to strip it.
 - **💚 Always Free**: No subscriptions, no sign-ups, no paywalls. Open source and free forever.
+
+
+## 🌐 Public API
+
+datclean exposes two public REST endpoints that anyone can call — no API key required.
+
+### `POST /api/exif`
+
+Strips **all metadata** (EXIF, XMP, IPTC) from an image while keeping the original format and full resolution.
+
+| Detail | Value |
+|---|---|
+| Method | `POST` |
+| Content-Type | `multipart/form-data` |
+| Field name | `image` |
+| Max file size | 50 MB |
+| Supported formats | JPEG, PNG, WebP, AVIF, TIFF, GIF, HEIC/HEIF |
+| Output format | Same as input (HEIC → JPEG) |
+
+**Response headers**
+
+| Header | Description |
+|---|---|
+| `Content-Type` | MIME type of the output image |
+| `Content-Disposition` | Suggested filename (e.g. `photo_datclean.jpg`) |
+| `X-Original-Format` | Detected input format (e.g. `jpeg`, `heif`) |
+| `X-Original-Size` | Input file size in bytes |
+| `X-Output-Size` | Output file size in bytes |
+
+---
+
+### `POST /api/optimize`
+
+Full optimization pipeline: strips metadata → resizes to max 720 px height (proportional) → exports as **WebP at 90% quality**.
+
+| Detail | Value |
+|---|---|
+| Method | `POST` |
+| Content-Type | `multipart/form-data` |
+| Field name | `image` |
+| Max file size | 50 MB |
+| Supported formats | JPEG, PNG, WebP, AVIF, TIFF, GIF, HEIC/HEIF |
+| Output format | `image/webp` |
+
+**Response headers**
+
+| Header | Description |
+|---|---|
+| `Content-Type` | Always `image/webp` |
+| `Content-Disposition` | Suggested filename (e.g. `photo_opt.webp`) |
+| `X-Original-Width` / `X-Original-Height` | Source dimensions in pixels |
+| `X-Output-Width` / `X-Output-Height` | Output dimensions in pixels |
+| `X-Was-Resized` | `"true"` if the image was scaled down, `"false"` otherwise |
+| `X-Original-Size` | Input file size in bytes |
+| `X-Output-Size` | Output file size in bytes |
+
+---
+
+### Error responses
+
+All errors return JSON with an `error` field and an appropriate HTTP status code.
+
+| Status | Meaning |
+|---|---|
+| `400` | Missing `image` field |
+| `413` | File exceeds 50 MB limit |
+| `415` | Wrong Content-Type (must be `multipart/form-data`) |
+| `500` | Processing failed (invalid or corrupt image) |
 
 
 ## 🛠️ Technology Stack
