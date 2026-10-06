@@ -33,8 +33,10 @@ export async function stripExif(file: File): Promise<Blob> {
     outputType = 'image/jpeg';
   }
 
-  // Step 2: Decode to ImageBitmap (browser-native, no EXIF carried)
-  const bitmap = await createImageBitmap(sourceBlob);
+  // Step 2: Decode to ImageBitmap (browser-native, no EXIF carried).
+  // Bake the EXIF Orientation into the pixels — once metadata is stripped,
+  // viewers can no longer rotate the image, so portrait shots would end up sideways.
+  const bitmap = await createImageBitmap(sourceBlob, { imageOrientation: 'from-image' });
 
   // Step 3: Draw onto OffscreenCanvas (strips all metadata)
   const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);

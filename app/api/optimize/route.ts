@@ -74,10 +74,9 @@ export async function POST(req: NextRequest) {
     const inputBuffer = Buffer.from(arrayBuffer);
     const originalSize = arrayBuffer.byteLength;
 
-    // ── 4. Read original dimensions ──────────────────────────────────────────
-    const { width: originalWidth = 0, height: originalHeight = 0 } = await sharp(inputBuffer, {
-      failOn: 'none',
-    }).metadata();
+    // ── 4. Read original dimensions (as displayed, i.e. after EXIF Orientation)
+    const { autoOrient } = await sharp(inputBuffer, { failOn: 'none' }).metadata();
+    const { width: originalWidth = 0, height: originalHeight = 0 } = autoOrient ?? {};
 
     // ── 5. Compute output dimensions ─────────────────────────────────────────
     let outputWidth = originalWidth;
@@ -92,9 +91,10 @@ export async function POST(req: NextRequest) {
     }
 
     // ── 6. Build sharp pipeline ──────────────────────────────────────────────
-    //    sharp strips metadata by default when converting formats.
+    //    sharp strips metadata by default when converting formats, so apply the
+    //    EXIF Orientation to the pixels first (otherwise portraits end up sideways).
     //    We resize (if needed) then export as WebP @ 90% quality.
-    let pipeline = sharp(inputBuffer, { failOn: 'none' });
+    let pipeline = sharp(inputBuffer, { failOn: 'none' }).autoOrient();
 
     if (wasResized) {
       pipeline = pipeline.resize(outputWidth, outputHeight, {

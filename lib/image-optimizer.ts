@@ -39,8 +39,9 @@ export async function optimizeImage(file: File): Promise<OptimizeResult> {
     sourceBlob = await convertHeicToBlob(file);
   }
 
-  // Step 2: Decode to ImageBitmap (strips EXIF)
-  const bitmap = await createImageBitmap(sourceBlob);
+  // Step 2: Decode to ImageBitmap (strips EXIF), applying EXIF Orientation to the
+  // pixels first so dimensions and output are upright once metadata is gone
+  const bitmap = await createImageBitmap(sourceBlob, { imageOrientation: 'from-image' });
   const originalWidth = bitmap.width;
   const originalHeight = bitmap.height;
 

@@ -92,8 +92,10 @@ export async function POST(req: NextRequest) {
       pipeline: (img) => img.jpeg({ quality: 95, mozjpeg: true }),
     };
 
+    // autoOrient() bakes the EXIF Orientation into the pixels before the tag is
+    // stripped — otherwise portrait photos would come out sideways.
     const outputBuffer = await config.pipeline(
-      sharp(inputBuffer, { failOn: 'none' }),
+      sharp(inputBuffer, { failOn: 'none' }).autoOrient(),
     ).toBuffer();
 
     // ── 6. Build filename ────────────────────────────────────────────────────
